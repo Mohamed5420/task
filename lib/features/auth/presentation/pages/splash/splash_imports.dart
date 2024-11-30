@@ -1,0 +1,19 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task/core/bloc/cart_cubit/currency_cubit.dart';
+import 'package:task/core/bloc/countries_cubit/countries_cubit.dart';
+import 'package:task/core/helpers/global_state.dart';
+import 'package:task/core/helpers/psermission_services.dart';
+import 'package:task/core/routes/router_imports.gr.dart';
+import 'package:task/core/theme/colors/colors_extension.dart';
+import 'package:task/core/theme/text/app_text_style.dart';
+import 'package:task/res.dart';
+import 'package:get_it/get_it.dart';
+import 'package:location/location.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:widget_and_text_animator/widget_and_text_animator.dart';
+
+part 'splash.dart';
+part 'splash_controller.dart';
