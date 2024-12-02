@@ -13,6 +13,9 @@ class CountriesCubit extends Cubit<CountryState> {
 
   getCurrencies() async {
     List<CountryModel>? currenciesList = await GetCountriesUseCase().call(false);
+    if(currenciesList?.any((e)=>e.id=="IL")??false){
+      currenciesList?.removeWhere((e)=>e.id=='IL');
+    }
     final box = await Hive.openBox<CountryModel>(Constants.countriesBox);
     box.clear();
     for (final currency in currenciesList??[]) {

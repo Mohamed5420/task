@@ -41,4 +41,13 @@ class CountryModel  {
       currencySymbol: json['currencySymbol'] ?? '',
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'alpha3': alpha3,
+        'currencyId': currencyId,
+        'currencyName': currencyName,
+        'currencySymbol': currencySymbol,
+      };
 }

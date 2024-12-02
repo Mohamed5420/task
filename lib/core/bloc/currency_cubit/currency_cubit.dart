@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:task/core/constants/constants.dart';
@@ -13,6 +12,9 @@ class CurrencyCubit extends Cubit<CurrencyState> {
 
   fetchCurrencies() async {
     List<CurrencyModel>? countryCodes = await GetCurrenciesUseCase().call(false);
+    if(countryCodes?.any((e)=>e.countryCode=="ILS")??false){
+      countryCodes?.removeWhere((e)=>e.countryCode=='ILS');
+    }
     final box = await Hive.openBox<CurrencyModel>(Constants.currenciesBox);
     box.clear();
     for (final currency in countryCodes??[]) {
