@@ -4,11 +4,9 @@ import 'package:task/core/errors/failures.dart';
 import 'package:task/core/http/generic_http/api_names.dart';
 import 'package:task/core/http/generic_http/generic_http.dart';
 import 'package:task/core/http/models/http_request_model.dart';
-import 'package:task/core/usecases/use_case.dart';
+import 'package:task/core/models/currency_model/currency_model.dart';
 import 'package:task/features/base/data/models/country_model.dart';
 import 'package:task/features/base/data/models/exchange_rates_model.dart';
-import 'package:task/features/base/domain/entities/currency_entity.dart';
-import 'package:task/features/base/domain/entities/exchange_rates_entity.dart';
 import 'package:task/features/base/domain/use_case/get_historical_data_use_case.dart';
 
 import 'home_remote_data_source.dart';
@@ -16,7 +14,7 @@ import 'home_remote_data_source.dart';
 @Injectable(as: HomeRemoteDataSource)
 class ImplHomeRemoteDataSource extends HomeRemoteDataSource {
   @override
-  Future<Either<Failure, List<CountryEntity>?>> getCountries(bool refresh) {
+  Future<Either<Failure, List<CountryModel>?>> getCountries(bool refresh) {
     HttpRequestModel model = HttpRequestModel(
         url: ApiNames.getCountries,
         requestMethod: RequestMethod.get,
@@ -27,7 +25,7 @@ class ImplHomeRemoteDataSource extends HomeRemoteDataSource {
             json.values.map((e) => CountryModel.fromJson(e))),
         showLoader: false,
         refresh: refresh);
-    var data = GenericHttpImpl<List<CountryEntity>>()(model);
+    var data = GenericHttpImpl<List<CountryModel>>()(model);
     return data;
   }
 
@@ -48,6 +46,28 @@ class ImplHomeRemoteDataSource extends HomeRemoteDataSource {
     var data = GenericHttpImpl<CurrencyRatesModel>()(model);
     return data;
   }
+
+  @override
+  Future<Either<Failure, List<CurrencyModel>>> getCurrencies() {
+    HttpRequestModel model = HttpRequestModel(
+        url: ApiNames.getCurrencies,
+        requestMethod: RequestMethod.get,
+        responseKey: (data) => data['conversion_rates'],
+        responseType: ResType.list,
+        errorFunc: (error) => error["message"],
+        toJsonFunc: (json) {
+          // Explicitly convert to List<CurrencyModel>
+          return json.entries.map<CurrencyModel>((entry) {
+            return CurrencyModel(
+              countryCode: entry.key,
+              value: (entry.value as num).toDouble(),
+            );
+          }).toList(); // Ensures List<CurrencyModel>
+        },
+        showLoader: false,
+        refresh: false);
+    var data = GenericHttpImpl<List<CurrencyModel>>()(model);
+    return data;  }
 
   // @override
   // Future<Either<Failure, NearestProviderModel>> getNearestProviders(NearestProvidersEntity params) async{

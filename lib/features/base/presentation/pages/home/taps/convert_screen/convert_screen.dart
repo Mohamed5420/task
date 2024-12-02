@@ -19,14 +19,15 @@ class _ConvertScreenState extends State<ConvertScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.black,
-      appBar: DefaultAppBar(title: 'Currency Converter',showBack: false,centerTitle: true,titleColor: context.colors.white,backgroundColor: context.colors.black,),
+      backgroundColor: context.colors.white,
+      appBar: DefaultAppBar(title: 'Currency Converter',showBack: false,centerTitle: true,titleColor: context.colors.black,backgroundColor: context.colors.white,),
       body: ObsValueConsumer(
         observable: controller.resultObs,
         builder: (context,data) {
           return ListView(
             padding: EdgeInsets.all(16.w),
             children: [
+              const BuildAppLogo(),
               BuildAmountInput(controller: controller,),
               BuildSelectCountriesView(controller: controller,),
               if(controller.resultObs.getValue()!=null)BuildResultText(controller: controller,),

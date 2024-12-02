@@ -7,13 +7,15 @@ class BuildAmountInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return GenericTextField(
       contentPadding:
-      EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
+      EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
       controller: controller.amountController,
+      enableBorderColor: Colors.grey,
+      focusBorderColor: Colors.grey,
       fieldTypes: FieldTypes.normal,
       type: TextInputType.number,
       action: TextInputAction.next,
-      textColor: context.colors.white,
-      hintColor: context.colors.white,
+      textColor: context.colors.black,
+      hintColor: context.colors.black,
       validate: (value) => value?.validateEmpty(),
       label: 'Amount',
       margin: EdgeInsets.only(top: 0.h),

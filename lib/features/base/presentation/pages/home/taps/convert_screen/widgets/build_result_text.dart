@@ -15,9 +15,9 @@ class BuildResultText extends StatelessWidget {
         Gaps.vGap4,
         Text(
           '${controller.resultObs.getValue()??0} ${controller.selectedToCountryObs.getValue()?.id} ${controller.selectedToCountryObs.getValue()?.name}',
-          style: AppTextStyle.s16_w600(color: context.colors.white),
+          style: AppTextStyle.s16_w600(color: context.colors.black),
         ),
-        Gaps.vGap10,
+        Gaps.vGap16,
         Text(
           '1 ${controller.selectedFromCountryObs.getValue()?.id} = ${controller.getDifferenceAmountFrom()} ${controller.selectedToCountryObs.getValue()?.id}\n1 ${controller.selectedToCountryObs.getValue()?.id} = ${controller.getDifferenceAmountTo()} ${controller.selectedFromCountryObs.getValue()?.id}',
           style: AppTextStyle.s13_w600(color: context.colors.grey),

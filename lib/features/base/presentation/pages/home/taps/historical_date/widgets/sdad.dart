@@ -1,87 +1,69 @@
-// import 'package:charts_flutter/flutter.dart' as charts;
-// import 'package:flutter/material.dart';
-//
-// class CurrencyChart extends StatelessWidget {
-//   final List<Currency> history;
-//
-//   CurrencyChart({required this.history});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final data = history.map((currency) {
-//       return charts.Series<Currency, DateTime>(
-//         id: 'Currency',
-//         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-//         domainFn: (currency, _) => currency.timestamp,
-//         measureFn: (currency, _) => currency.rate,
-//         data: [currency],
-//       );
-//     }).toList();
-//
-//     return charts.TimeSeriesChart(
-//       data,
-//       animate: false,
-//       primaryMeasureAxis: const charts.NumericAxisSpec(
-//         renderSpec: charts.GridlineRendererSpec(
-//           labelStyle: charts.TextStyleSpec(
-//             fontSize: 12,
-//             color: charts.MaterialPalette.gray.shade500,
-//           ),
-//         ),
-//       ),
-//       domainAxis: const charts.DateTimeAxisSpec(
-//         renderSpec: charts.GridlineRendererSpec(
-//           labelStyle: charts.TextStyleSpec(
-//             fontSize: 12,
-//             color: charts.MaterialPalette.gray.shade500,
-//           ),
-//         ),
-//       ),
-//       behaviors: [
-//         charts.SeriesLegend(),
-//         charts.ChartTitle('USD to CAD'),
-//         charts.ChartTitle(
-//           'Nov 23, 2024 at 20:00 UTC - Nov 30, 2024 at 19:50 UTC',
-//           behavioral: charts.ChartTitleBehavior.title,
-//           titleOutsideJustification: charts.OutsideJustification.middleDrawArea,
-//         ),
-//         charts.RangeAnnotation([
-//           charts.RangeAnnotationSegment(
-//             history.first.timestamp,
-//             history.last.timestamp,
-//             charts.RangeAnnotationAxisType.domain,
-//             color: Charts.grey100.withOpacity(0.5),
-//           ),
-//         ]),
-//       ],
-//     );
-//   }
-// }
-//
-// class Currency {
-//   final DateTime timestamp;
-//   final double rate;
-//
-//   Currency({required this.timestamp, required this.rate});
-// }
-//
-// void main() {
-//   final history = [
-//     Currency(timestamp: DateTime(2024, 11, 23, 20, 0), rate: 1.40063),
-//     Currency(timestamp: DateTime(2024, 11, 24, 0, 0), rate: 1.40492),
-//     Currency(timestamp: DateTime(2024, 11, 24, 4, 0), rate: 1.40491),
-//     Currency(timestamp: DateTime(2024, 11, 24, 8, 0), rate: 1.40327),
-//     Currency(timestamp: DateTime(2024, 11, 24, 12, 0), rate: 1.40275),
-//     Currency(timestamp: DateTime(2024, 11, 24, 16, 0), rate: 1.40163),
-//     Currency(timestamp: DateTime(2024, 11, 24, 20, 0), rate: 1.40089),
-//     Currency(timestamp: DateTime(2024, 11, 25, 0, 0), rate: 1.39891),
-//     // Add more data points as needed
-//   ];
-//
-//   runApp(MaterialApp(
-//       home: Scaffold(
-//           appBar: AppBar(title: const Text('USD to CAD')),
-//           body: CurrencyChart(history: history),
-//               ),
-//         ));
-// }
+part of 'historical_data_widgets_imports.dart';
+
+class BuildTestHistoricalChart extends StatelessWidget {
+  const BuildTestHistoricalChart({super.key, required this.controller, required this.connected});
+  final HistoricalDateController controller;
+  final bool connected;
+
+  @override
+  Widget build(BuildContext context) {
+    return connected==true?BaseBlocBuilder(
+      bloc: controller.historicalDataBloc,
+      onSuccessWidget: (data) {
+        // Create chart data points
+        final List<ChartData> chartData = List.generate(
+          data.rates.length,
+              (i) => ChartData(data.dates[i], data.rates[i]),
+        );
+
+        return SizedBox(
+          height: 230.h,
+          child: SfCartesianChart(
+            title: ChartTitle(text: 'Currency Rates Over Last Week',textStyle: AppTextStyle.s13_w500(color: context.colors.grey),),
+            legend: const Legend(isVisible: false),
+            tooltipBehavior: TooltipBehavior(enable: true),
+            zoomPanBehavior: ZoomPanBehavior(
+              enablePinching: true,
+              enablePanning: true,
+            ),
+            primaryXAxis: DateTimeAxis(
+              intervalType: DateTimeIntervalType.days,
+              interval: 1, // Ensures all days are shown
+              edgeLabelPlacement: EdgeLabelPlacement.shift,
+              dateFormat: DateFormat('dd'),
+              labelStyle: AppTextStyle.s13_w500(color: Colors.black),
+              rangePadding: ChartRangePadding.none, // Prevents additional padding
+            ),
+            primaryYAxis: NumericAxis(
+              labelFormat: '{value}',
+              labelStyle: AppTextStyle.s13_w500(color: Colors.black),
+
+            ),
+            series: <CartesianSeries<dynamic, dynamic>>[
+              AreaSeries<ChartData, DateTime>(
+                dataSource: chartData,
+                xValueMapper: (ChartData data, _) => data.date,
+                yValueMapper: (ChartData data, _) =>
+                    double.parse(data.rate.toStringAsFixed(3)),
+                name: '',
+                gradient: LinearGradient(
+                  colors: [Colors.teal, Colors.teal.withOpacity(0.2)],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    ):Center(child: Text('No Internet Connection',style: AppTextStyle.s16_w500(color: context.colors.black),),);
+  }
+}
+
+// Model for chart data
+class ChartData {
+  final DateTime date;
+  final double rate;
+
+  ChartData(this.date, this.rate);
+}

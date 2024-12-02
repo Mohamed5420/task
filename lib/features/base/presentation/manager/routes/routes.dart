@@ -3,6 +3,5 @@ import 'package:task/core/routes/router_imports.gr.dart';
 
 
 var baseRoute = [
-  // AutoRoute(page: Profile.page),
 
 ];

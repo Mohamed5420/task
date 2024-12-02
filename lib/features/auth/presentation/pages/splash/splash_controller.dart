@@ -4,19 +4,23 @@ class SplashController {
   final Location location = Location();
 
   void manipulateSaveData(BuildContext context) async {
-     await GetIt.I<PermissionServices>().requestPermission(Permission.locationWhenInUse, context);
-    await Future.delayed(const Duration(seconds: 3));
-    await context.read<CurrencyCubit>().fetchCurrencies();
-    await context.read<CountriesCubit>().initData();
-     AutoRouter.of(context).push(const Home());
-
-  //    SharedPreferences prefs = await SharedPreferences.getInstance();
-  //    var token = prefs.get("accessToken");
-  //   if(token==null){
-  //     AutoRouter.of(context).push(const WelcomeRoute());
-  //   }else{
-  //     GlobalState.instance.set("accessToken", token);
-  //     AutoRouter.of(context).push(const Home());
-  //   }
+    var appHacked = await FlutterJailbreakDetection.jailbroken;
+    if (appHacked) {
+      CustomToast.showSimpleToast(msg: "Your device is rooted or jailbroken");
+    return;
+    }
+    await Future.delayed(const Duration(seconds: 2));
+     final InternetConnectionChecker checkerConnection;
+     checkerConnection = InternetConnectionChecker.createInstance();
+     bool connection = await checkerConnection.hasConnection;
+    if(connection){
+      await context.read<CurrencyCubit>().fetchCurrencies();
+      await context.read<CountriesCubit>().getCurrencies();
+      AutoRouter.of(context).push(const Home());
+    }else{
+      await context.read<CurrencyCubit>().fetchCurrenciesOffline();
+      await context.read<CountriesCubit>().getCurrenciesOffline();
+      AutoRouter.of(context).push(const Home());
+    }
   }
 }

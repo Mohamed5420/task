@@ -7,7 +7,7 @@ class TabIcon extends StatelessWidget {
    const TabIcon({super.key, required this.index,required this.active,required this.controller});
   @override
   Widget build(BuildContext context) {
-    Color txtColor = active ? context.colors.white : context.colors.greyText;
+    Color txtColor = active ? context.colors.primary : context.colors.greyText;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,

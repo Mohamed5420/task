@@ -1,28 +1,73 @@
 part of 'historical_data_imports.dart';
 
 class HistoricalDateController{
-  CountryEntity? fromCurrency;
-  CountryEntity? toCurrency;
-  ObsValue<CountryEntity?> selectedFromCountryObs = ObsValue.withInit(null);
-  ObsValue<CountryEntity?> selectedToCountryObs = ObsValue.withInit(null);
+  CountryModel? fromCurrency;
+  CountryModel? toCurrency;
+  ObsValue<CountryModel?> selectedFromCountryObs = ObsValue.withInit(null);
+  ObsValue<CountryModel?> selectedToCountryObs = ObsValue.withInit(null);
+  ObsValue<bool> connectivityObs = ObsValue.withInit(true);
   BaseBloc<CurrencyRatesModel> historicalDataBloc = BaseBloc(null);
 
-  switchCountries(){
+  switchCountries() async {
+    final InternetConnectionChecker checkerConnection;
+    checkerConnection = InternetConnectionChecker.createInstance();
+    bool connection = await checkerConnection.hasConnection;
     fromCurrency = selectedToCountryObs.getValue();
     toCurrency = selectedFromCountryObs.getValue();
     selectedFromCountryObs.setValue(fromCurrency);
     selectedToCountryObs.setValue(toCurrency);
-    getCurrencies();
+    if(selectedToCountryObs.getValue() == null || selectedFromCountryObs.getValue() == null){
+      return;
+    }else if(connection==false){
+      connectivityObs.setValue(false);
+    }else{
+      connectivityObs.setValue(true);
+      getCurrencies();
+    }
   }
 
-  onSelectFromCountry(CountryEntity country){
+  checkConnectivity()async{
+    Timer.periodic(const Duration(seconds: 1), (timer) async {
+      final InternetConnectionChecker checkerConnection;
+      checkerConnection = InternetConnectionChecker.createInstance();
+      bool connection = await checkerConnection.hasConnection;
+      print("connection#$connection");
+      if(connection==true){
+        connectivityObs.setValue(true);
+        if(selectedToCountryObs.getValue() == null || selectedFromCountryObs.getValue() == null){
+          getCurrencies();
+        }
+      }
+    });
+  }
+  onSelectFromCountry(CountryModel country) async {
+    final InternetConnectionChecker checkerConnection;
+    checkerConnection = InternetConnectionChecker.createInstance();
+    bool connection = await checkerConnection.hasConnection;
     selectedFromCountryObs.setValue(country);
-    getCurrencies();
+    if(selectedToCountryObs.getValue() == null || selectedFromCountryObs.getValue() == null){
+      return;
+    }else if(connection==false){
+      connectivityObs.setValue(false);
+    }else{
+      connectivityObs.setValue(true);
+      getCurrencies();
+    }
   }
 
-  onSelectToCountry(CountryEntity country){
+  onSelectToCountry(CountryModel country) async {
+    final InternetConnectionChecker checkerConnection;
+    checkerConnection = InternetConnectionChecker.createInstance();
+    bool connection = await checkerConnection.hasConnection;
     selectedToCountryObs.setValue(country);
-    getCurrencies();
+    if(selectedToCountryObs.getValue() == null && selectedFromCountryObs.getValue() == null){
+      return;
+    }else if(connection==false){
+      connectivityObs.setValue(false);
+    }else{
+      connectivityObs.setValue(true);
+      getCurrencies();
+    }
   }
 
   getCurrencies() async {
@@ -32,8 +77,6 @@ class HistoricalDateController{
         fromCountry: selectedFromCountryObs.getValue()?.currencyId??'',
         toCountry: selectedToCountryObs.getValue()?.currencyId??'',
       ));
-      print("historicalData:${historicalData?.dates.toString()}");
-      print("historicalData:${historicalData?.rates.toString()}");
       historicalDataBloc.successState(historicalData);
     }
   }

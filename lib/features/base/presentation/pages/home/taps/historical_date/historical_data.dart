@@ -8,20 +8,31 @@ class HistoricalDate extends StatefulWidget {
 }
 
 class _HistoricalDateState extends State<HistoricalDate> {
+  HistoricalDateController controller = HistoricalDateController();
+
+  @override
+  void initState() {
+    controller.checkConnectivity();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    HistoricalDateController controller = HistoricalDateController();
-
     return Scaffold(
-      backgroundColor: context.colors.black,
-      appBar: DefaultAppBar(title: 'Historical Data',showBack: false,centerTitle: true,titleColor: context.colors.white,backgroundColor: context.colors.black,),
-      body: ListView(
-        padding: EdgeInsets.all(16.w),
-        children: [
-          BuildHistoricalSelectCountriesView(controller:controller),
-          BuildHistoricalChart(controller:controller),
-        ],
+      backgroundColor: context.colors.white,
+      appBar: DefaultAppBar(title: 'Historical Data',showBack: false,centerTitle: true,titleColor: context.colors.white,backgroundColor: context.colors.white,),
+      body: ObsValueConsumer(
+        observable: controller.connectivityObs,
+        builder: (context,data) {
+          return ListView(
+            padding: EdgeInsets.all(16.w),
+            children: [
+              const BuildAppLogo(),
+              BuildHistoricalSelectCountriesView(controller:controller),
+              BuildTestHistoricalChart(controller:controller, connected: data,),
+            ],
+          );
+        }
       ),
     );
   }

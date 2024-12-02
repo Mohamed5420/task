@@ -127,4 +127,7 @@ class Res {
   static const String wallet = "assets/images/wallet.png";
   static const String debitCard = "assets/images/debitCard.png";
   static const String businessAccount = "assets/images/businessAccount.png";
+  static const String launcherIcon = "assets/images/launcher_icon.jpg";
+  static const String kib = "assets/images/kib.jpg";
+  static const String logoKib = "assets/images/logo.png";
 }

@@ -26,14 +26,9 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.black,
+      backgroundColor: context.colors.white,
       body: Center(
-        child: TextAnimator('Currency Converter',
-            incomingEffect: WidgetTransitionEffects.incomingScaleDown(),
-            textAlign: TextAlign.center,
-            atRestEffect: WidgetRestingEffects.bounce(),
-            outgoingEffect: WidgetTransitionEffects.outgoingScaleUp(),
-            style: AppTextStyle.s40_w700(color: context.colors.white)),
+        child: Image.asset(Res.kib, width: 250.w, height: 250.h),
       ),
     );
   }

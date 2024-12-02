@@ -1,16 +1,54 @@
-# task
+# Currency Converter Project
+A Flutter-based currency converter application with robust functionalities, security features, and offline support.
 
-A new Flutter project.
+# Features
+List of Supported Currencies:
 
-## Getting Started
+- Displays supported currencies with their respective country flags.
+- Caches currency data in a local database after the first API request for future use.
+- Historical Exchange Rates:
 
-This project is a starting point for a Flutter application.
+- Displays historical exchange rates for the past 7 days for two selected currencies.
+- Currency Conversion:
 
-A few resources to get you started if this is your first Flutter project:
+- Allows users to convert amounts between two selected currencies.
+- Security Features:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+  *Prevents app usage on rooted (Android) or jailbroken (iOS) devices.
+  Implements secure data storage mechanisms for sensitive information.
+  Offline Mode:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Works seamlessly without an internet connection using cached data.
+
+# Tools and Libraries
+
+- State Management:
+
+- BLoC Pattern for structured and scalable state management following clean architecture principles.
+  Dependency Injection:
+- Utilized GetIt for efficient dependency injection.
+
+- Database:
+    * Hive library for local data storage with robust justification for its reliability and compatibility with Flutter.
+    * CachedNetworkImage to handle efficient flag loading with offline support and memory management.
+
+- Unit Testing:
+    * Comprehensive test coverage for API integration and business logic.
+
+- Material Design:
+    * Used Google's Material Design components for intuitive and user-friendly UI.
+
+
+# Localizations
+- to generate localizations run this command "dart run intl_utils:generate"
+
+# To Build Release Version
+- dart run lib/env/env_specific_handlers/dev_handler.dart
+- flutter build apk --release --no-tree-shake-icons --dart-define-from-file=.run/json/dev.json  --flavor dev
+
+
+# Contributing
+- Contributions are welcome. Please follow the guidelines mentioned in CONTRIBUTING.md.
+
+# License
+- This project is licensed under the MIT License - see the LICENSE file for details.

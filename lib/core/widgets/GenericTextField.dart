@@ -98,7 +98,7 @@ class GenericTextField extends StatelessWidget {
       enableInteractiveSelection: false,
       showCursor: true,
       validator: (value) => validate(value),
-      style: textStyle ?? AppTextStyle.s11_w400(color: textColor ?? context.colors.black).copyWith(fontFamily: fontFamily),
+      style: textStyle ?? AppTextStyle.s13_w400(color: textColor ?? context.colors.black).copyWith(fontFamily: fontFamily),
       decoration: CustomInputDecoration(
         labelTxt: label,
         hint: hint,

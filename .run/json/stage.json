@@ -3,8 +3,8 @@
   "APP_BASE_URL": "stage/",
   "APP_ENV_NAME": "stage",
   "APP_API": "api/",
-  "APP_APP_NAME_EN": "task",
+  "APP_APP_NAME_EN": "KIB Calculator",
   "APP_APP_NAME_AR": "تحويل عملات",
-  "APP_LOCAL_LOGO": "assets/images/icon.png"
+  "APP_LOCAL_LOGO": "assets/images/launcher_icon.jpg"
 
 }

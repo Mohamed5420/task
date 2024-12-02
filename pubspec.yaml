@@ -75,6 +75,7 @@ dependencies:
   geocode: ^1.0.3
   flutter_screenutil: ^5.9.0
   internet_connectivity_checker: ^1.0.2
+  internet_connection_checker:
   simple_connection_checker: ^0.2.1
   adaptive_theme: ^3.4.1
   widget_and_text_animator: ^1.1.5
@@ -121,10 +122,15 @@ dependencies:
   blurrycontainer:
   bot_toast:
   flutter_app_badger:
+  hive:
+  hive_flutter:
+  flutter_jailbreak_detection:
+  mockito:
 
 dependency_overrides:
   intl: 0.18.0
   http: ^1.0.0
+#  meta: ^1.12.0
 
 dev_dependencies:
   flutter_test:
@@ -137,6 +143,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
   build_runner: ^2.4.7
+  hive_generator:
   auto_route_generator: ^8.1.0
   injectable_generator: ^2.4.1
 
@@ -149,7 +156,7 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   remove_alpha: true
-  image_path: "assets/images/icon.png"
+  image_path: "assets/images/launcher_icon.jpg"
 
 
 # For information on the generic Dart part of this file, see the

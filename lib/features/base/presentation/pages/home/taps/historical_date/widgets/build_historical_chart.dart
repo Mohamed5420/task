@@ -10,13 +10,12 @@ class BuildHistoricalChart extends StatelessWidget {
       bloc: controller.historicalDataBloc,
       onSuccessWidget: (data) {
         List<FlSpot> spots = [];
-        for (int i = 0; i < data.dates.length; i++) {
+        for (int i = 0; i < data.rates.length; i++) {
           spots.add(FlSpot(i.toDouble(), data.rates[i]));
         }
 
         return SizedBox(
           height: 300.h,
-          width: 100.w,
           child: LineChart(
             LineChartData(
               lineBarsData: [
@@ -27,11 +26,21 @@ class BuildHistoricalChart extends StatelessWidget {
                   dotData: const FlDotData(show: false),
                 ),
               ],
-              titlesData: const FlTitlesData(
-                leftTitles: AxisTitles(
+              titlesData: FlTitlesData(
+                leftTitles: const AxisTitles(
                   sideTitles: SideTitles(showTitles: false),
                 ),
-                topTitles: AxisTitles(
+                rightTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    reservedSize: 70,
+                    showTitles: true,
+                    getTitlesWidget: (value, meta) => Text(
+                      value.toStringAsFixed(4),
+                      style: AppTextStyle.s11_w600(color: context.colors.white),
+                    ),
+                  ),
+                ),
+                topTitles: const AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: false,
                   ),

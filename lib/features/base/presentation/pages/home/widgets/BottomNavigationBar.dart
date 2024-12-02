@@ -15,7 +15,7 @@ class AnimatedBottomNavigateBar extends StatelessWidget {
             tabBuilder: (int index, bool isActive) {
               return TabIcon(index: index, active: isActive, controller: controller,);
             },
-            backgroundColor: context.colors.black,
+            backgroundColor: context.colors.white,
             gapLocation: GapLocation.center,
             notchSmoothness: NotchSmoothness.sharpEdge,
             borderColor: context.colors.white,

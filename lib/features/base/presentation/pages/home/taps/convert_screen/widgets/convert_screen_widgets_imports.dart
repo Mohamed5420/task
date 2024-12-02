@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,8 +10,9 @@ import 'package:task/core/theme/colors/colors_extension.dart';
 import 'package:task/core/theme/text/app_text_style.dart';
 import 'package:task/core/widgets/GenericTextField.dart';
 import 'package:task/core/widgets/default_button.dart';
-import 'package:task/features/base/domain/entities/currency_entity.dart';
+import 'package:task/features/base/data/models/country_model.dart';
 import 'package:task/features/base/presentation/pages/home/taps/convert_screen/convert_screen_imports.dart';
+import 'package:task/res.dart';
 
 part 'build_currency_selector_drop_down.dart';
 part 'build_amount_input.dart';
@@ -21,3 +21,4 @@ part 'build_conversion_result.dart';
 part 'build_replace_button.dart';
 part 'build_result_text.dart';
 part 'build_select_countries_view.dart';
+part 'build_app_logo.dart';

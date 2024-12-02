@@ -12,10 +12,10 @@ class BuildReplaceButton extends StatelessWidget {
       child: Container(
         height: 50.h,
         width: 60.w,
-        margin: EdgeInsets.symmetric(vertical: 4.h),
+        margin: EdgeInsets.symmetric(vertical: 14.h),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color:  Colors.grey[800],
+          color:  context.colors.primary,
           boxShadow: [
             BoxShadow(
               color: Colors.grey[800]!.withOpacity(0.5),
@@ -27,7 +27,7 @@ class BuildReplaceButton extends StatelessWidget {
         ),
         padding: EdgeInsets.all(5.w),
         alignment: Alignment.center,
-        child: const Icon(Icons.swap_vert, color: Colors.white),
+        child: Icon(Icons.swap_vert, color: Colors.white,size: 30.w,),
       ),
     );
   }

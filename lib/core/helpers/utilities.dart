@@ -1,28 +1,20 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:task/core/bloc/cart_cubit/currency_cubit.dart';
-import 'package:task/core/bloc/countries_cubit/countries_cubit.dart';
 import 'package:task/core/bloc/location_cubit/location_cubit.dart';
-import 'package:task/core/constants/constants.dart';
 import 'package:task/core/helpers/di.dart';
 import 'package:task/core/helpers/global_context.dart';
 import 'package:task/features/general/domain/entities/location_entity.dart';
-import 'package:task/features/general/presentation/pages/location_address/LocationAddressImports.dart';
 import 'package:geocoder2/geocoder2.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:map_launcher/map_launcher.dart';
-import 'package:http/http.dart' as http;
-import 'package:collection/collection.dart';
 
 @lazySingleton
 class Utilities {
@@ -196,7 +188,7 @@ class Utilities {
       CupertinoPageRoute(
         builder: (cxt) => BlocProvider.value(
           value: locCubit,
-          child: const LocationAddress(),
+          // child: const LocationAddress(),
         ),
       ),
     );
@@ -249,41 +241,6 @@ class Utilities {
       return num.toStringAsFixed(1);
     }
   }
-
-
-  num getAmountByFxRate(num? amount, String? firstCurrency, String? secondCurrency) {
-    if (amount == 0 || amount == null || firstCurrency == "" || secondCurrency == "" || firstCurrency == null || secondCurrency == null) return 0;
-    if (firstCurrency == secondCurrency || secondCurrency.isEmpty || (firstCurrency == 'Constants.undefined' || secondCurrency == 'Constants.undefined')) return amount;
-    var context = getIt<GlobalContext>().context();
-    var rates = context.read<CurrencyCubit>().state.model;
-    if (firstCurrency == Constants.kwdCurrency) {
-      num rate = rates?.firstWhereOrNull((element) => element.countryCode.toUpperCase() == secondCurrency.toUpperCase())?.value ?? 0;
-      return truncateToDecimalPlaces((amount * rate), getDCPeByCurrency(secondCurrency));
-    }
-    if (secondCurrency == Constants.kwdCurrency) {
-      num rate = rates?.firstWhereOrNull((element) => element.countryCode.toUpperCase() == firstCurrency.toUpperCase())?.value ?? 0;
-      return truncateToDecimalPlaces((amount / rate), getDCPeByCurrency(secondCurrency));
-    }
-    if (firstCurrency != Constants.kwdCurrency && secondCurrency != Constants.kwdCurrency) {
-      num rateFirstCurrency = rates?.firstWhereOrNull((element) => element.countryCode.toUpperCase() == firstCurrency.toUpperCase())?.value ?? 0;
-      num rateSecondCurrency = rates?.firstWhereOrNull((element) => element.countryCode.toUpperCase() == secondCurrency.toUpperCase())?.value ?? 0;
-      return truncateToDecimalPlaces((amount * (rateSecondCurrency / rateFirstCurrency)), getDCPeByCurrency(secondCurrency));
-    }
-    return truncateToDecimalPlaces(amount, getDCPeByCurrency(secondCurrency));
-    }
-
-  num truncateToDecimalPlaces(num amount, int decimalDigits) {
-    return (amount * pow(10, decimalDigits)).truncate() / pow(10, decimalDigits);
-    }
-
-  int getDCPeByCurrency(String? cashCurrency) {
-    var context = getIt<GlobalContext>().context();
-    var countries = context.read<CountriesCubit>().state.list;
-    if (cashCurrency == Constants.kwdCurrency) return 3;
-    if (cashCurrency == Constants.usdCurrency) return 2;
-    // if (cashCurrency != null && cashCurrency != "") return countries?.firstWhereOrNull((element) => element.currencyId.toUpperCase() == cashCurrency)?.decimalPlace ?? 3;
-    return 3;
-    }
 
 
 }

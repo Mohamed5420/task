@@ -10,7 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:task/core/helpers/biometric_auth.dart' as _i8;
+import 'package:task/core/helpers/currency_conversion.dart' as _i8;
 import 'package:task/core/helpers/file_service.dart' as _i3;
 import 'package:task/core/helpers/firebase_analytics_helper.dart' as _i9;
 import 'package:task/core/helpers/global_context.dart' as _i10;
@@ -70,7 +70,7 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i5.PermissionServices>(() => _i5.PermissionServices());
     gh.factory<_i6.ShareServices>(() => _i6.ShareServices());
     gh.singleton<_i7.LoadingHelper>(() => _i7.LoadingHelper());
-    gh.lazySingleton<_i8.BiometricAuth>(() => _i8.BiometricAuth());
+    gh.lazySingleton<_i8.CurrencyConversion>(() => _i8.CurrencyConversion());
     gh.lazySingleton<_i9.FirebaseAnalyticsHelper>(
         () => _i9.FirebaseAnalyticsHelper());
     gh.lazySingleton<_i10.GlobalContext>(() => _i10.GlobalContext());

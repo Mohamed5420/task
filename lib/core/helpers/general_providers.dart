@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task/core/bloc/cart_cubit/currency_cubit.dart';
 import 'package:task/core/bloc/countries_cubit/countries_cubit.dart';
+import 'package:task/core/bloc/currency_cubit/currency_cubit.dart';
 import 'package:task/core/bloc/device_cubit/device_cubit.dart';
 import 'package:task/core/bloc/location_cubit/location_cubit.dart';
 import 'package:task/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';

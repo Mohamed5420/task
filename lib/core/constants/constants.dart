@@ -6,6 +6,8 @@ import 'package:skeletonizer/skeletonizer.dart';
 class Constants{
   static const String kwdCurrency = 'KWD';
   static const String usdCurrency = 'USD';
+  static const String currenciesBox = 'currency_box';
+  static const String countriesBox = 'countries_box';
   static const Duration openContainerDuration = Duration(milliseconds: 700);
   static Border cardBorder = Border.all(color: AppColors.noContextInstance.greyWhite);
   static PaintingEffect? shimmerEffect = ShimmerEffect(
